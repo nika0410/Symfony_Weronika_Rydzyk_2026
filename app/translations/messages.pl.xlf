@@ -42,6 +42,26 @@
         <source>action.view</source>
         <target>Podgląd</target>
       </trans-unit>
+      <trans-unit id="title.task_list">
+        <source>title.task_list</source>
+        <target>Lista zadań</target>
+      </trans-unit>
+      <trans-unit id="label.created_at">
+        <source>label.created_at</source>
+        <target>Utworzono</target>
+      </trans-unit>
+      <trans-unit id="label.updated_at">
+        <source>label.updated_at</source>
+        <target>Zaktualizowano</target>
+      </trans-unit>
+      <trans-unit id="title.task_details">
+        <source>title.task_details</source>
+        <target>Szczegóły zadania #%id%</target>
+      </trans-unit>
+      <trans-unit id="label.comment">
+        <source>label.comment</source>
+        <target>Komentarz</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
