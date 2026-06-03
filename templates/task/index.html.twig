@@ -26,8 +26,8 @@
             {% for task in pagination.items %}
                 <tr>
                     <td>{{ task.id }}</td>
-                    <td>{{ task.createdAt|date('Y/m/d') }}</td>
-                    <td>{{ task.updatedAt|date('Y/m/d') }}</td>
+                    <td>{{ task.createdAt|format_date('long') }}</td>
+                    <td>{{ task.createdAt|format_date('long') }}</td>
                     <td>{{ task.title }}</td>
                     <td>
                         <a href="{{ url('task_view', {id: task.id}) }}" title="{{ 'action.view'|trans }}">

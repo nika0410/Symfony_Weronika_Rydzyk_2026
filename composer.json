@@ -19,7 +19,9 @@
         "symfony/runtime": "7.4.*",
         "symfony/translation": "7.4.*",
         "symfony/twig-bundle": "7.4.*",
-        "symfony/yaml": "7.4.*"
+        "symfony/yaml": "7.4.*",
+        "twig/extra-bundle": "*",
+        "twig/intl-extra": "*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "*",
