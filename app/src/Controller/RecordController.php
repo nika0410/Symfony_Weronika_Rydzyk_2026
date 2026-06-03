@@ -24,6 +24,7 @@ class RecordController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(
+        '',
         name: 'record_index',
         methods: ['GET']
     )]
@@ -34,6 +35,33 @@ class RecordController extends AbstractController
         return $this->render(
             'record/index.html.twig',
             ['records' => $records]
+        );
+    }
+    /**
+     * View action.
+     *
+     * @param RecordRepository $repository Record repository
+     * @param int              $id         Record identifier
+     *
+     * @return Response HTTP response
+     */
+    #[Route(
+        '/{id}',
+        name: 'record_view',
+        requirements: ['id' => '[1-9]\d*'],
+        methods: ['GET']
+    )]
+    public function view(RecordRepository $repository, int $id): Response
+    {
+        $record = $repository->findOneById($id);
+
+        if (null === $record) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render(
+            'record/view.html.twig',
+            ['record' => $record]
         );
     }
 }
