@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>View record</h1>
+    <h1>{{ 'title.record_view'|trans }}</h1>
     {% if record is defined and record|length %}
         <dl>
-            <dt>Title</dt>
+            <dt>{{ 'label.title'|trans }}</dt>
             <dd>{{ record.title }}</dd>
             <dt>Content</dt>
             <dd>{{ record.content }}</dd>
