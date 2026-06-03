@@ -5,30 +5,30 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
- * HelloController class.
+ * Class HelloController.
  */
 class HelloController
 {
     /**
      * Index action.
      *
+     * @param string $name User input
+     *
      * @return Response HTTP response
      */
     #[Route(
-        '/hello',
+        '/hello/{name}',
         name: 'hello_index',
+        requirements: ['name' => '[a-zA-Z]+'],
+        defaults: ['name' => 'World'],
         methods: ['GET']
     )]
-    public function index(Request $request): Response
+    public function index(string $name): Response
     {
-        $name = $request->query->getAlnum('name', 'World');
-
         return new Response('Hello '.$name.'!');
     }
 }
-
