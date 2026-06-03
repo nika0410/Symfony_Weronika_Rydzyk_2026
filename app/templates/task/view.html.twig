@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zadanie #{{ task.id }}{% endblock %}
+
+{% block body %}
+    <h1>{{ task.title }}</h1>
+
+    <ul>
+        <li><strong>ID:</strong> {{ task.id }}</li>
+        <li><strong>Utworzono:</strong> {{ task.createdAt|date('Y-m-d H:i') }}</li>
+        <li><strong>Zaktualizowano:</strong> {{ task.updatedAt|date('Y-m-d H:i') }}</li>
+        {# Tutaj za chwilę dodamy komentarz z Ćwiczenia 4 #}
+    </ul>
+
+    <a href="{{ url('task_index') }}" class="btn btn-secondary">Powrót do listy</a>
+{% endblock %}
