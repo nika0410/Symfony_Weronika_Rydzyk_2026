@@ -15,6 +15,10 @@
         "symfony/yaml": "7.4.*"
     },
     "require-dev": {
+        "escapestudios/symfony2-coding-standard": "^3.18",
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "rector/rector": "^2.4",
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "config": {
         "allow-plugins": {
@@ -48,13 +52,24 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "static-analysis": [
+            "./vendor/bin/phpcs --config-set installed_paths $(realpath vendor/escapestudios/symfony2-coding-standard)",
+            "./vendor/bin/phpcs --config-set default_standard Symfony",
+            "./vendor/bin/phpcs --standard=Symfony src/ --ignore=Kernel.php",
+            "./vendor/bin/phpcs --standard=Symfony tests/  --ignore=object-mapper.php",
+            "./vendor/bin/php-cs-fixer fix src/ --rules=@Symfony,@PSR1,@PSR2,@PSR12",
+            "./vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony,@PSR1,@PSR2,@PSR12",
+            "./vendor/bin/rector process src",
+            "./vendor/bin/rector process tests"
         ]
     },
     "conflict": {
@@ -62,7 +77,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "7.4.*"
         }
     }
