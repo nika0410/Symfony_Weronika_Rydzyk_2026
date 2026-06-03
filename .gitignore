@@ -1,6 +1,23 @@
 .idea
-var
-vendor
-.php_cs.cache
-.php-cs-fixer.cache
-.phpunit.result.cache
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+.env
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
