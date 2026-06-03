@@ -38,6 +38,10 @@
         <source>title.record_view</source>
         <target>Widok rekordu #%id%</target>
       </trans-unit>
+      <trans-unit id="action.view">
+        <source>action.view</source>
+        <target>Podgląd</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

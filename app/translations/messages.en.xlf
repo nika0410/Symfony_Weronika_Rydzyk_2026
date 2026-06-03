@@ -38,6 +38,10 @@
         <source>title.record_view</source>
         <target>Record view #%id%</target>
       </trans-unit>
+      <trans-unit id="action.view">
+        <source>action.view</source>
+        <target>View link</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

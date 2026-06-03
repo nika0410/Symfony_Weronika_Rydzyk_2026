@@ -24,7 +24,9 @@
                     <td>{{ record.id }}</td>
                     <td>{{ record.title }}</td>
                     <td>{{ record.tags|join(', ') }}</td>
-                    <td>&nbsp;</td>
+                    <td><a href="{{ url('record_view', {'id': record.id}) }}" class="btn btn-primary btn-sm">
+                            {{ 'action.view'|trans }}
+                        </a></td>
                 </tr>
             {% endfor %}
             </tbody>
