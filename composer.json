@@ -7,19 +7,28 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/doctrine-bundle": "^3.2",
+        "doctrine/doctrine-migrations-bundle": "^4.0",
+        "doctrine/orm": "^3.6",
+        "knplabs/knp-paginator-bundle": "*",
+        "symfony/asset": "7.4.*",
         "symfony/console": "7.4.*",
         "symfony/dotenv": "7.4.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.4.*",
         "symfony/runtime": "7.4.*",
+        "symfony/translation": "7.4.*",
         "symfony/twig-bundle": "7.4.*",
         "symfony/yaml": "7.4.*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "*",
         "escapestudios/symfony2-coding-standard": "^3.18",
+        "fakerphp/faker": "*",
         "friendsofphp/php-cs-fixer": "^3.95",
         "rector/rector": "^2.4",
-        "squizlabs/php_codesniffer": "^4.0"
+        "squizlabs/php_codesniffer": "^4.0",
+        "symfony/maker-bundle": "*"
     },
     "config": {
         "allow-plugins": {
@@ -71,8 +80,13 @@
             "./vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony,@PSR1,@PSR2,@PSR12",
             "./vendor/bin/rector process src",
             "./vendor/bin/rector process tests"
+        ],
+        "init-app" : [
+            "./bin/console --no-interaction doctrine:migrations:migrate",
+            "./bin/console --no-interaction doctrine:fixtures:load"
         ]
     },
+
     "conflict": {
         "symfony/symfony": "*"
     },
