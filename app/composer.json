@@ -21,7 +21,9 @@
         "symfony/yaml": "7.4.*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "*",
         "escapestudios/symfony2-coding-standard": "^3.18",
+        "fakerphp/faker": "*",
         "friendsofphp/php-cs-fixer": "^3.95",
         "rector/rector": "^2.4",
         "squizlabs/php_codesniffer": "^4.0",

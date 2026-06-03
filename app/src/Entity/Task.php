@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Task entity.
  */
@@ -15,58 +16,99 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'tasks')]
 class Task
 {
+    /**
+     * Primary key.
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?\DateTime $createdAt = null;
-
-    #[ORM\Column]
-    private ?\DateTime $updatedAt = null;
-
-    #[ORM\Column(length: 255)]
+    /**
+     * Title.
+     */
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $title = null;
 
+    /**
+     * Created at.
+     */
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    /**
+     * Updated at.
+     */
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    /**
+     * Getter for Id.
+     *
+     * @return int|null Id
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTime $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTime $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
+    /**
+     * Getter for title.
+     *
+     * @return string|null Title
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    /**
+     * Setter for title.
+     *
+     * @param string|null $title Title
+     */
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
+    }
 
-        return $this;
+    /**
+     * Getter for created at.
+     *
+     * @return \DateTimeImmutable|null Created at
+     */
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Setter for created at.
+     *
+     * @param \DateTimeImmutable|null $createdAt Created at
+     */
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * Getter for updated at.
+     *
+     * @return \DateTimeImmutable|null Updated at
+     */
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Setter for updated at.
+     *
+     * @param \DateTimeImmutable|null $updatedAt Updated at
+     */
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 }
