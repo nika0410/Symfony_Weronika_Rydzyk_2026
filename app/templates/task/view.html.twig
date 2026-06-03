@@ -9,7 +9,7 @@
         <li><strong>ID:</strong> {{ task.id }}</li>
         <li><strong>Utworzono:</strong> {{ task.createdAt|date('Y-m-d H:i') }}</li>
         <li><strong>Zaktualizowano:</strong> {{ task.updatedAt|date('Y-m-d H:i') }}</li>
-        {# Tutaj za chwilę dodamy komentarz z Ćwiczenia 4 #}
+        <li><strong>Komentarz:</strong> {{ task.comment }}</li>
     </ul>
 
     <a href="{{ url('task_index') }}" class="btn btn-secondary">Powrót do listy</a>

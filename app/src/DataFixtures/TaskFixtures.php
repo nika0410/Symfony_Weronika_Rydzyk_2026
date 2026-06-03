@@ -26,6 +26,7 @@ class TaskFixtures extends AbstractBaseFixtures
             $task->setUpdatedAt(
                 \DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-100 days', '-1 days'))
             );
+            $task->setComment($this->faker->sentence());
             $this->manager->persist($task);
         }
 
