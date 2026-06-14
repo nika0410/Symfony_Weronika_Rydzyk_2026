@@ -47,7 +47,10 @@ class TaskRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('task')
-            ->select('task', 'category')
+            ->select(
+                'partial task.{id, createdAt, updatedAt, title}',
+                'partial category.{id, title}'
+            )
             ->join('task.category', 'category');
     }
 }
