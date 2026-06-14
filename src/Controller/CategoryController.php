@@ -6,12 +6,11 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Repository\CategoryRepository;
+use App\Service\CategoryServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class CategoryController.
@@ -20,11 +19,18 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryController extends AbstractController
 {
     /**
+     * Constructor.
+     *
+     * @param CategoryServiceInterface $categoryService Category service
+     */
+    public function __construct(private readonly CategoryServiceInterface $categoryService)
+    {
+    }
+
+    /**
      * Index action.
      *
-     * @param Request $request HTTP Request
-     * @param CategoryRepository $categoryRepository Category repository
-     * @param PaginatorInterface $paginator Paginator
+     * @param int $page Page number
      *
      * @return Response HTTP response
      */
@@ -32,18 +38,9 @@ class CategoryController extends AbstractController
         name: 'category_index',
         methods: ['GET']
     )]
-    public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $paginator->paginate(
-            $categoryRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE,
-            [
-                'sortFieldAllowList' => ['category.id', 'category.createdAt', 'category.updateAt', 'category.title'],
-                'defaultSortFieldName' => 'category.updateAt',
-                'defaultSortDirection' => 'desc',
-            ]
-        );
+        $pagination = $this->categoryService->getPaginatedList($page);
 
         return $this->render('category/index.html.twig', ['pagination' => $pagination]);
     }
