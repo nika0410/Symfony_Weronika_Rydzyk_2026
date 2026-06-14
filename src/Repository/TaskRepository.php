@@ -46,6 +46,8 @@ class TaskRepository extends ServiceEntityRepository
      */
     public function queryAll(): QueryBuilder
     {
-        return $this->createQueryBuilder('task');
+        return $this->createQueryBuilder('task')
+            ->select('task', 'category')
+            ->join('task.category', 'category');
     }
 }
