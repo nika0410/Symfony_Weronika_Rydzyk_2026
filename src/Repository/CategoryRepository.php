@@ -31,6 +31,7 @@ class CategoryRepository extends ServiceEntityRepository
     public function queryAll(): \Doctrine\ORM\QueryBuilder
     {
         return $this->createQueryBuilder('category')
+            ->select('partial category.{id, createdAt, updateAt, title}')
             ->orderBy('category.updateAt', 'DESC');
     }
 }

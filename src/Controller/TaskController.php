@@ -51,7 +51,7 @@ class TaskController extends AbstractController
             $request->query->getInt('page', 1),
             TaskRepository::PAGINATOR_ITEMS_PER_PAGE,
             [
-                'sortFieldAllowList' => ['task.id', 'task.createdAt', 'task.updatedAt', 'task.title'],
+                'sortFieldAllowList' => ['task.id', 'task.createdAt', 'task.updatedAt', 'task.title', 'category.title'],
                 'defaultSortFieldName' => 'task.updatedAt',
                 'defaultSortDirection' => 'desc',
             ]
