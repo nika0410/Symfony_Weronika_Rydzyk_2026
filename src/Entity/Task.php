@@ -45,6 +45,17 @@ class Task
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $comment = null;
 
+    // ...
+    /**
+     * Category.
+     *
+     * @var Category
+     */
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+//
+
     /**
      * Getter for Id.
      *
@@ -123,6 +134,18 @@ class Task
     public function setComment(?string $comment): static
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
