@@ -6,6 +6,7 @@
 namespace App\Service;
 
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use App\Entity\Category;
 
 /**
  * Interface CategoryServiceInterface.
