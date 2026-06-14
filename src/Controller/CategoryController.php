@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
  * Class CategoryController.
@@ -145,6 +146,53 @@ class CategoryController extends AbstractController
 
         return $this->render(
             'category/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'category' => $category,
+            ]
+        );
+    }
+
+    /**
+     * Delete action.
+     *
+     * @param Request  $request  HTTP request
+     * @param Category $category Category entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route(
+        '/{id}/delete',
+        name: 'category_delete',
+        requirements: ['id' => '[1-9]\d*'],
+        methods: ['GET', 'DELETE']
+    )]
+    public function delete(Request $request, Category $category, TranslatorInterface $translator): Response
+    {
+        $form = $this->createForm(FormType::class, $category, [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        //dodane ręczne wysłanie formularza
+        if (!$form->isSubmitted() && $request->isMethod('DELETE')) {
+            $form->submit($request->request->all($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->delete($category);
+
+            $this->addFlash(
+                'success',
+                $translator->trans('message.deleted_successfully')
+            );
+
+            return $this->redirectToRoute('category_index');
+        }
+
+        return $this->render(
+            'category/delete.html.twig',
             [
                 'form' => $form->createView(),
                 'category' => $category,
