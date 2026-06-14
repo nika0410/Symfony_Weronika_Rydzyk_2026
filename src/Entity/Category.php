@@ -46,14 +46,14 @@ class Category
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdateAt(): ?\DateTimeImmutable
     {
         return $this->updateAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    public function setUpdateAt(?\DateTimeImmutable $updateAt): static
     {
-        $this->updateAt = $updatedAt;
+        $this->updateAt = $updateAt;
 
         return $this;
     }

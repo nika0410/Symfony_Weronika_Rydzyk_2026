@@ -66,6 +66,14 @@
         <source>label.category</source>
         <target>Category</target>
       </trans-unit>
+      <trans-unit id="title.category_list">
+        <source>title.category_list</source>
+        <target>Category list</target>
+      </trans-unit>
+      <trans-unit id="title.category_details">
+        <source>title.category_details</source>
+        <target>Category details #%id%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
