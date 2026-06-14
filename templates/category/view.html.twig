@@ -25,6 +25,8 @@
             </a>
         </p>
     {% else %}
-        <p>{{ 'message.record_not_found'|trans }}</p>
+        <div class="alert alert-warning" role="alert">
+            {{ 'message.record_not_found'|trans }}
+        </div>
     {% endif %}
 {% endblock %}

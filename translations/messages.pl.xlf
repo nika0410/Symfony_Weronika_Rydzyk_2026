@@ -74,6 +74,10 @@
         <source>title.category_details</source>
         <target>Szczegóły kategorii #%id%</target>
       </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Pomyślnie utworzono rekord!</target>
+      </trans-unit>
       <trans-unit id="title.category_edit">
         <source>title.category_edit</source>
         <target>Edycja kategorii</target>
@@ -97,6 +101,10 @@
       <trans-unit id="action.delete">
         <source>action.delete</source>
         <target>Usuń</target>
+      </trans-unit>
+      <trans-unit id="action.create">
+        <source>action.create</source>
+        <target>Dodaj nową kategorię</target>
       </trans-unit>
 
     </body>
