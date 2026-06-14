@@ -51,4 +51,18 @@ class CategoryService implements CategoryServiceInterface
             ]
         );
     }
+
+    /**
+     * Save entity.
+     *
+     * @param Category $category Category entity
+     */
+    public function save(Category $category): void
+    {
+        $category->setUpdatedAt(new \DateTimeImmutable());
+        if (null === $category->getId()) {
+            $category->setCreatedAt(new \DateTimeImmutable());
+        }
+        $this->categoryRepository->save($category);
+    }
 }

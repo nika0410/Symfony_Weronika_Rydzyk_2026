@@ -1,23 +1,28 @@
 <?php
 
+/**
+ * Category repository.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class CategoryRepository.
+ *
  * @extends ServiceEntityRepository<Category>
  */
 class CategoryRepository extends ServiceEntityRepository
 {
     /**
-     * Items per page.
+     * Constructor.
      *
-     * @constant int
+     * @param ManagerRegistry $registry Manager registry
      */
-    public const PAGINATOR_ITEMS_PER_PAGE = 10;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
@@ -26,12 +31,21 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
+     * @return QueryBuilder Query builder
      */
-    public function queryAll(): \Doctrine\ORM\QueryBuilder
+    public function queryAll(): QueryBuilder
     {
-        return $this->createQueryBuilder('category')
-            ->select('partial category.{id, createdAt, updateAt, title}')
-            ->orderBy('category.updateAt', 'DESC');
+        return $this->createQueryBuilder('category');
+    }
+
+    /**
+     * Save entity.
+     *
+     * @param Category $category Category entity
+     */
+    public function save(Category $category): void
+    {
+        $this->getEntityManager()->persist($category);
+        $this->getEntityManager()->flush();
     }
 }
