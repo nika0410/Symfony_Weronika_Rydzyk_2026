@@ -62,6 +62,10 @@
         <source>label.comment</source>
         <target>Comment</target>
       </trans-unit>
+      <trans-unit id="label.category">
+        <source>label.category</source>
+        <target>Category</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
