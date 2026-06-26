@@ -130,6 +130,50 @@
         <source>message.category_contains_tasks</source>
         <target>Nie można usunąć kategorii, ponieważ zawiera ona przypisane zadania.</target>
       </trans-unit>
+      <trans-unit id="action.login">
+        <source>action.login</source>
+        <target>Zaloguj</target>
+      </trans-unit>
+      <trans-unit id="action.logout">
+        <source>action.logout</source>
+        <target>Wyloguj</target>
+      </trans-unit>
+      <trans-unit id="title.login">
+        <source>title.login</source>
+        <target>Logowanie</target>
+      </trans-unit>
+      <trans-unit id="title.change_password">
+        <source>title.change_password</source>
+        <target>Zmiana hasła</target>
+      </trans-unit>
+      <trans-unit id="label.old_password">
+        <source>label.old_password</source>
+        <target>Stare hasło</target>
+      </trans-unit>
+      <trans-unit id="label.new_password">
+        <source>label.new_password</source>
+        <target>Nowe hasło</target>
+      </trans-unit>
+      <trans-unit id="label.repeat_password">
+        <source>label.repeat_password</source>
+        <target>Powtórz nowe hasło</target>
+      </trans-unit>
+      <trans-unit id="message.password_changed">
+        <source>message.password_changed</source>
+        <target>Hasło zmienione pomyślnie!</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>Hasło</target>
+      </trans-unit>
+      <trans-unit id="message.logged_in_as">
+        <source>message.logged_in_as</source>
+        <target>Jesteś zalogowany jako %username%</target>
+      </trans-unit>
 
     </body>
   </file>

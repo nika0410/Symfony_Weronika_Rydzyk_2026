@@ -3,6 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
+
+    <div class="navbar-nav ms-auto">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="nav-item nav-link">
+                {{ app.user.email }}
+            </div>
+            <a class="nav-item nav-link" href="{{ url('app_logout') }}">
+                {{ 'action.logout'|trans }}
+            </a>
+        {% else %}
+            {# Pokaż link tylko jeśli nie jesteśmy aktualnie na trasie 'app_login' #}
+            {% if app.request.attributes.get('_route') != 'app_login' %}
+                <a class="nav-item nav-link" href="{{ url('app_login') }}">
+                    {{ 'action.login'|trans }}
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
     {% block stylesheets %}
