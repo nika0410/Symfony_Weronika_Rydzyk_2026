@@ -222,6 +222,30 @@
         <source>label.roles</source>
         <target>Status</target>
       </trans-unit>
+      <trans-unit id="action.promote">
+        <source>action.promote</source>
+        <target>Nadaj uprawnienia admina</target>
+      </trans-unit>
+      <trans-unit id="action.demote">
+        <source>action.demote</source>
+        <target>Odbierz uprawnienia admina</target>
+      </trans-unit>
+      <trans-unit id="message.promoted_successfully">
+        <source>message.promoted_successfully</source>
+        <target>Pomyślnie przyznano uprawnienia admina</target>
+      </trans-unit>
+      <trans-unit id="message.demoted_successfully">
+        <source>message.demoted_successfully</source>
+        <target>Pomyślnie odebrano uprawnienia admina</target>
+      </trans-unit>
+      <trans-unit id="message.cannot_demote_self">
+        <source>message.cannot_demote_self</source>
+        <target>Nie możesz odebrać uprawnień sameu sobie</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source></source>
+        <target></target>
+      </trans-unit>
 
 
 

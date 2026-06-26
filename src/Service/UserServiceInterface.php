@@ -37,4 +37,22 @@ interface UserServiceInterface
      * @param User $user User entity
      */
     public function delete(User $user): void;
+
+
+    /**
+     * Promote user to admin.
+     *
+     * @param User $user User entity
+     */
+    public function promoteToAdmin(User $user): void;
+
+    /**
+     * Demote user from admin.
+     *
+     * @param User $user User entity
+     */
+    public function demoteFromAdmin(User $user): void;
+
+
+
 }

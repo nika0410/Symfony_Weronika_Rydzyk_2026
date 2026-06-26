@@ -157,4 +157,55 @@ class UserController extends AbstractController
 
         return $this->render('user/delete.html.twig', ['form' => $form->createView(), 'user' => $user]);
     }
+
+    /**
+     * Promote action.
+     *
+     * @param User $user User entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/promote', name: 'user_promote', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
+    public function promote(Request $request, User $user): Response
+    {
+        if (!$this->isCsrfTokenValid('promote'.$user->getId(), $request->request->get('_token'))) {
+            return $this->redirectToRoute('user_index');
+        }
+
+        $this->userService->promoteToAdmin($user);
+
+        $this->addFlash('success', $this->translator->trans('message.promoted_successfully'));
+
+        return $this->redirectToRoute('user_index');
+    }
+
+    /**
+     * Demote action.
+     *
+     * @param User $user User entity
+     *
+     * @return Response HTTP response
+     */
+    #[Route('/{id}/demote', name: 'user_demote', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
+    public function demote(Request $request, User $user): Response
+    {
+        if (!$this->isCsrfTokenValid('demote'.$user->getId(), $request->request->get('_token'))) {
+            return $this->redirectToRoute('user_index');
+        }
+        if ($user === $this->getUser()) {
+            $this->addFlash('warning', $this->translator->trans('message.cannot_demote_self'));
+
+            return $this->redirectToRoute('user_index');
+        }
+
+        $this->userService->demoteFromAdmin($user);
+
+        $this->addFlash('success', $this->translator->trans('message.demoted_successfully'));
+
+        return $this->redirectToRoute('user_index');
+    }
+
+
+
+
 }

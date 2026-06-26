@@ -35,6 +35,24 @@
                         <a href="{{ url('user_delete', {id: user.id}) }}" title="{{ 'action.delete'|trans }}">
                             {{ 'action.delete'|trans }}
                         </a>
+
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            {% if user.id != app.user.id %}
+                                <form method="post" action="{{ url('user_demote', {id: user.id}) }}" style="display:inline">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('demote' ~ user.id) }}">
+                                    <button class="btn btn-link p-0 align-baseline" type="submit">
+                                        {{ 'action.demote'|trans }}
+                                    </button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            <form method="post" action="{{ url('user_promote', {id: user.id}) }}" style="display:inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('promote' ~ user.id) }}">
+                                <button class="btn btn-link p-0 align-baseline" type="submit">
+                                    {{ 'action.promote'|trans }}
+                                </button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

@@ -7,6 +7,7 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Entity\Enum\UserRole;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -85,4 +86,36 @@ class UserService implements UserServiceInterface
     {
         $this->userRepository->delete($user);
     }
+
+    /**
+     * Promote user to admin.
+     *
+     * @param User $user User entity
+     */
+    public function promoteToAdmin(User $user): void
+    {
+        $roles = $user->getRoles();
+        if (!in_array(UserRole::ROLE_ADMIN->value, $roles, true)) {
+            $roles[] = UserRole::ROLE_ADMIN->value;
+            $user->setRoles($roles);
+            $this->userRepository->save($user);
+        }
+    }
+
+    /**
+     * Demote user from admin.
+     *
+     * @param User $user User entity
+     */
+    public function demoteFromAdmin(User $user): void
+    {
+        $roles = array_filter(
+            $user->getRoles(),
+            fn (string $role): bool => UserRole::ROLE_ADMIN->value !== $role
+        );
+        $user->setRoles(array_values($roles));
+        $this->userRepository->save($user);
+    }
+
+
 }
