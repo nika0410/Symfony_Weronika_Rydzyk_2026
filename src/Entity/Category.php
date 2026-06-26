@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class Category.
@@ -23,13 +24,18 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updateAt = null;
 
     #[ORM\Column(length: 64)]
     private ?string $title = null;
+    #[ORM\Column(length: 64)]
+    #[Gedmo\Slug(fields: ['title'])]
+    private ?string $slug = null;
 
     /**
      * @var Collection<int, Task>
@@ -89,5 +95,17 @@ class Category
     public function getTasks(): Collection
     {
         return $this->tasks;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
