@@ -26,6 +26,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'task.updatedAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'task.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.title') }}</th>
+                <th>{{ 'label.tags'|trans }}</th>
                 <th>{{ 'label.actions'|trans }}</th>
             </tr>
             </thead>
@@ -38,12 +39,17 @@
                     <td>{{ task.title }}</td>
                     <td>{{ task.category.title }}</td>
                     <td>
+                        <div class="text-truncate" style="max-width: 80px;" title="{{ task.tags|map(tag => tag.title)|join(', ') }}">
+                            {{ task.tags|map(tag => tag.title)|join(', ') }}
+                        </div>
+                    </td>
+                    <td>
                         <a href="{{ url('task_view', {id: task.id}) }}" title="{{ 'action.view'|trans }}">
                             {{ 'action.view'|trans }}
-                        </a>
+                        </a><p> </p>
                         <a href="{{ url('task_edit', {id: task.id}) }}" title="{{ 'action.edit'|trans }}">
                             {{ 'action.edit'|trans }}
-                        </a>
+                        </a><p> </p>
                         <a href="{{ url('task_delete', {id: task.id}) }}" title="{{ 'action.delete'|trans }}">
                             {{ 'action.delete'|trans }}
                         </a>

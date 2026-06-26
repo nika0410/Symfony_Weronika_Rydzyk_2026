@@ -66,6 +66,10 @@
         <source>title.task_details</source>
         <target>Szczegóły zadania #%id%</target>
       </trans-unit>
+      <trans-unit id="title.tag_details">
+        <source>title.tag_details</source>
+        <target>Szczegóły tagu #%id%</target>
+      </trans-unit>
       <trans-unit id="label.comment">
         <source>label.comment</source>
         <target>Komentarz</target>

@@ -8,6 +8,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Task;
+use App\Entity\Tag;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
@@ -32,7 +33,10 @@ class TaskFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             return;
         }
 
-        $this->createMany(100, 'task', function (int $i) {
+        // 1. Pobieramy wszystkie tagi z bazy (już są załadowane dzięki getDependencies)
+        $tags = $this->manager->getRepository(Tag::class)->findAll();
+
+        $this->createMany(100, 'task', function (int $i) use ($tags) {
             $task = new Task();
             $task->setTitle($this->faker->sentence);
             $task->setCreatedAt(
@@ -48,6 +52,15 @@ class TaskFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             $category = $this->getRandomReference('category', Category::class);
             $task->setCategory($category);
 
+            // 2. Logika dodawania losowych tagów
+            if (count($tags) > 0) {
+                // Wybieramy od 0 do 3 losowych tagów
+                $randomTags = $this->faker->randomElements($tags, $this->faker->numberBetween(0, 3));
+                foreach ($randomTags as $tag) {
+                    $task->addTag($tag);
+                }
+            }
+
             return $task;
         });
     }
@@ -62,6 +75,11 @@ class TaskFixtures extends AbstractBaseFixtures implements DependentFixtureInter
      */
     public function getDependencies(): array
     {
-        return [CategoryFixtures::class];
+        return [
+            CategoryFixtures::class
+        ];
+
     }
+
+
 }
