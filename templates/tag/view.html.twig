@@ -15,6 +15,14 @@
             <dt class="col-sm-3">Zaktualizowano</dt>
             <dd class="col-sm-9">{{ tag.updatedAt|date('Y-m-d H:i') }}</dd>
         </dl>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <p>
+                <a href="{{ url('tag_edit', {id: tag.id}) }}" class="btn btn-link">{{ 'action.edit'|trans }}</a>
+                <a href="{{ url('tag_delete', {id: tag.id}) }}" class="btn btn-link">{{ 'action.delete'|trans }}</a>
+            </p>
+        {% endif %}
+
         <p>
             <a href="{{ url('tag_index') }}" class="btn btn-link">{{ 'action.back_to_list'|trans }}</a>
         </p>

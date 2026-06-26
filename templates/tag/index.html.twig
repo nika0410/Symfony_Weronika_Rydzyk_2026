@@ -5,11 +5,13 @@
 {% block body %}
     <h1>Lista tagów</h1>
 
-    <div class="mb-3">
-        <a href="{{ url('tag_create') }}" class="btn btn-primary" title="{{ 'action.create.tag'|trans }}">
-            {{ 'action.create.tag'|trans }}
-        </a>
-    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="mb-3">
+            <a href="{{ url('tag_create') }}" class="btn btn-primary" title="{{ 'action.create.tag'|trans }}">
+                {{ 'action.create.tag'|trans }}
+            </a>
+        </div>
+    {% endif %}
 
     {% if pagination is defined and pagination.items|length %}
         <table class="table table-striped">
@@ -27,8 +29,10 @@
                     <td>{{ tag.title }}</td>
                     <td>
                         <a href="{{ url('tag_view', {id: tag.id}) }}" title="{{ 'action.view'|trans }}">{{ 'action.view'|trans }}</a>
-                        <a href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
-                        <a href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+                            <a href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

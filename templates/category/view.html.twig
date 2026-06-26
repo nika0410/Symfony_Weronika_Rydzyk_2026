@@ -19,6 +19,18 @@
             <dt>{{ 'label.updated_at'|trans }}</dt>
             <dd>{{ category.updateAt|format_date('long') }}</dd>
         </dl>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <p>
+                <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">
+                    {{ 'action.edit'|trans }}
+                </a>
+                <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">
+                    {{ 'action.delete'|trans }}
+                </a>
+            </p>
+        {% endif %}
+
         <p>
             <a href="{{ url('category_index') }}" title="{{ 'action.back_to_list'|trans }}">
                 {{ 'action.back_to_list'|trans }}

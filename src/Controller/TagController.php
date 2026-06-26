@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/tag')]
 class TagController extends AbstractController
@@ -35,6 +36,7 @@ class TagController extends AbstractController
     }
 
     #[Route('/create', name: 'tag_create', methods: ['GET', 'POST'], priority: 10)]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): Response
     {
         $tag = new Tag();
@@ -51,6 +53,7 @@ class TagController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'tag_edit', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'PUT'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Tag $tag): Response
     {
         $form = $this->createForm(TagType::class, $tag, [
@@ -69,6 +72,7 @@ class TagController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'tag_delete', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'DELETE'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Tag $tag): Response
     {
         $form = $this->createForm(FormType::class, $tag, [

@@ -11,11 +11,13 @@
             {{ knp_pagination_render(pagination) }}
         </div>
 
-        <div class="mb-3">
-            <a href="{{ url('category_create') }}" class="btn btn-primary" title="{{ 'action.create.category'|trans }}">
-                {{ 'action.create.category'|trans }}
-            </a>
-        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="mb-3">
+                <a href="{{ url('category_create') }}" class="btn btn-primary" title="{{ 'action.create.category'|trans }}">
+                    {{ 'action.create.category'|trans }}
+                </a>
+            </div>
+        {% endif %}
 
         <table class="table table-striped">
             <thead>
@@ -36,24 +38,26 @@
                         <a href="{{ url('category_view', {id: category.id}) }}" title="{{ 'action.view'|trans }}">
                             {{ 'action.view'|trans }}
                         </a>
-                        <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">
-                            {{ 'action.edit'|trans }}
-                        </a>
-                        <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">
-                            {{ 'action.delete'|trans }}
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action.edit'|trans }}">
+                                {{ 'action.edit'|trans }}
+                            </a>
+                            <a href="{{ url('category_delete', {id: category.id}) }}" title="{{ 'action.delete'|trans }}">
+                                {{ 'action.delete'|trans }}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-{% else %}
-    <tr>
-        <td colspan="4">
-            <div class="alert alert-warning" role="alert">
-                {{ 'message.empty_list'|trans }}
-            </div>
-        </td>
-    </tr>
-        {% endif %}
+    {% else %}
+        <tr>
+            <td colspan="4">
+                <div class="alert alert-warning" role="alert">
+                    {{ 'message.empty_list'|trans }}
+                </div>
+            </td>
+        </tr>
+    {% endif %}
 {% endblock %}
