@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Podgląd taga{% endblock %}
+
+{% block body %}
+    <h1>Podgląd taga</h1>
+    {% if tag is defined and tag|length %}
+        <dl class="row">
+            <dt class="col-sm-3">Id</dt>
+            <dd class="col-sm-9">{{ tag.id }}</dd>
+            <dt class="col-sm-3">{{ 'label.title'|trans }}</dt>
+            <dd class="col-sm-9">{{ tag.title }}</dd>
+            <dt class="col-sm-3">Utworzono</dt>
+            <dd class="col-sm-9">{{ tag.createdAt|date('Y-m-d H:i') }}</dd>
+            <dt class="col-sm-3">Zaktualizowano</dt>
+            <dd class="col-sm-9">{{ tag.updatedAt|date('Y-m-d H:i') }}</dd>
+        </dl>
+        <p>
+            <a href="{{ url('tag_index') }}" class="btn btn-link">{{ 'action.back_to_list'|trans }}</a>
+        </p>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            Brak danych.
+        </div>
+    {% endif %}
+{% endblock %}

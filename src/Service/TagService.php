@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Service;
+
+use App\Entity\Tag;
+use App\Repository\TagRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
+
+class TagService implements TagServiceInterface
+{
+    private const PAGINATOR_ITEMS_PER_PAGE = 10;
+
+    public function __construct(
+        private readonly TagRepository $tagRepository,
+        private readonly PaginatorInterface $paginator
+    ) {}
+
+    public function getPaginatedList(int $page): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->tagRepository->queryAll(),
+            $page,
+            self::PAGINATOR_ITEMS_PER_PAGE,
+            [
+                'sortFieldAllowList' => ['tag.id', 'tag.createdAt', 'tag.updatedAt', 'tag.title'],
+                'defaultSortFieldName' => 'tag.updatedAt',
+                'defaultSortDirection' => 'desc',
+            ]
+        );
+    }
+
+    public function save(Tag $tag): void
+    {
+        $this->tagRepository->save($tag);
+    }
+
+    public function delete(Tag $tag): void
+    {
+        $this->tagRepository->delete($tag);
+    }
+}

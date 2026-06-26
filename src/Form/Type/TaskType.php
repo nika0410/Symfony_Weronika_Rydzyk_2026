@@ -21,10 +21,10 @@ class TaskType extends AbstractType
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'title',
+                'choice_label' => fn (Category $category): ?string => $category->getTitle(),
                 'label' => 'label.category',
+                'placeholder' => 'label.none',
                 'required' => true,
-                'placeholder' => 'Wybierz kategorię',
             ]);
     }
 

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista tagów{% endblock %}
+
+{% block body %}
+    <h1>Lista tagów</h1>
+
+    <div class="mb-3">
+        <a href="{{ url('tag_create') }}" class="btn btn-primary" title="{{ 'action.create.tag'|trans }}">
+            {{ 'action.create.tag'|trans }}
+        </a>
+    </div>
+
+    {% if pagination is defined and pagination.items|length %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ 'label.title'|trans }}</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tag in pagination.items %}
+                <tr>
+                    <td>{{ tag.id }}</td>
+                    <td>{{ tag.title }}</td>
+                    <td>
+                        <a href="{{ url('tag_view', {id: tag.id}) }}" title="{{ 'action.view'|trans }}">{{ 'action.view'|trans }}</a>
+                        <a href="{{ url('tag_edit', {id: tag.id}) }}" title="{{ 'action.edit'|trans }}">{{ 'action.edit'|trans }}</a>
+                        <a href="{{ url('tag_delete', {id: tag.id}) }}" title="{{ 'action.delete'|trans }}">{{ 'action.delete'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            {{ 'message.empty_list'|trans }}
+        </div>
+    {% endif %}
+{% endblock %}
