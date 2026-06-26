@@ -167,25 +167,29 @@ class CategoryController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'DELETE']
     )]
-    public function delete(Request $request, Category $category, TranslatorInterface $translator): Response
+    public function delete(Request $request, Category $category): Response
     {
+        if (!$this->categoryService->canBeDeleted($category)) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.category_contains_tasks')
+            );
+
+            return $this->redirectToRoute('category_index');
+        }
+
         $form = $this->createForm(FormType::class, $category, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
         ]);
         $form->handleRequest($request);
 
-        //dodane ręczne wysłanie formularza
-        if (!$form->isSubmitted() && $request->isMethod('DELETE')) {
-            $form->submit($request->request->all($form->getName()));
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->delete($category);
 
             $this->addFlash(
                 'success',
-                $translator->trans('message.deleted_successfully')
+                $this->translator->trans('message.deleted_successfully')
             );
 
             return $this->redirectToRoute('category_index');

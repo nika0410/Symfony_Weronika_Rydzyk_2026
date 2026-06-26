@@ -106,6 +106,10 @@
         <source>action.create</source>
         <target>Dodaj nową kategorię</target>
       </trans-unit>
+      <trans-unit id="message.category_contains_tasks">
+        <source>message.category_contains_tasks</source>
+        <target>Nie można usunąć kategorii, ponieważ zawiera ona przypisane zadania.</target>
+      </trans-unit>
 
     </body>
   </file>
