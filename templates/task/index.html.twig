@@ -8,6 +8,12 @@
     <h1>{{ 'title.task_list'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
 
+        <div class="mb-3">
+            <a href="{{ url('task_create') }}" class="btn btn-primary" title="{{ 'action.create.task'|trans }}">
+                {{ 'action.create.task'|trans }}
+            </a>
+        </div>
+
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
@@ -34,6 +40,12 @@
                     <td>
                         <a href="{{ url('task_view', {id: task.id}) }}" title="{{ 'action.view'|trans }}">
                             {{ 'action.view'|trans }}
+                        </a>
+                        <a href="{{ url('task_edit', {id: task.id}) }}" title="{{ 'action.edit'|trans }}">
+                            {{ 'action.edit'|trans }}
+                        </a>
+                        <a href="{{ url('task_delete', {id: task.id}) }}" title="{{ 'action.delete'|trans }}">
+                            {{ 'action.delete'|trans }}
                         </a>
                     </td>
                 </tr>

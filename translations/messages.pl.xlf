@@ -42,6 +42,14 @@
         <source>action.view</source>
         <target>Podgląd</target>
       </trans-unit>
+      <trans-unit id="action.save">
+        <source>action.save</source>
+        <target>Zapisz</target>
+      </trans-unit>
+      <trans-unit id="action.back_to_list">
+       <source>action.back_to_list</source>
+       <target>Powrót do listy</target>
+      </trans-unit>
       <trans-unit id="title.task_list">
         <source>title.task_list</source>
         <target>Lista zadań</target>
@@ -102,9 +110,13 @@
         <source>action.delete</source>
         <target>Usuń</target>
       </trans-unit>
-      <trans-unit id="action.create">
-        <source>action.create</source>
+      <trans-unit id="action.create.category">
+        <source>action.create.category</source>
         <target>Dodaj nową kategorię</target>
+      </trans-unit>
+      <trans-unit id="action.create.task">
+        <source>action.create.task</source>
+        <target>Dodaj nowe zadanie</target>
       </trans-unit>
       <trans-unit id="message.category_contains_tasks">
         <source>message.category_contains_tasks</source>
