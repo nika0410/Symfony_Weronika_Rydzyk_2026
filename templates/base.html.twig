@@ -14,7 +14,7 @@
             </a>
         {% else %}
             {# Pokaż link tylko jeśli nie jesteśmy aktualnie na trasie 'app_login' #}
-            {% if app.request.attributes.get('_route') != 'app_login' %}
+            {% if app.request.attributes.get('_route') not in ['app_login', 'app_register'] %}
                 <a class="nav-item nav-link" href="{{ url('app_login') }}">
                     {{ 'action.login'|trans }}
                 </a>

@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="label.repeat_password">
         <source>label.repeat_password</source>
-        <target>Powtórz nowe hasło</target>
+        <target>Powtórz hasło</target>
       </trans-unit>
       <trans-unit id="message.password_changed">
         <source>message.password_changed</source>
@@ -178,6 +178,24 @@
         <source>message.form_error</source>
         <target>Błąd przy wypełnianiu formularza</target>
       </trans-unit>
+      <trans-unit id="title.register">
+        <source>title.register</source>
+        <target>Zarejestruj</target>
+      </trans-unit>
+      <trans-unit id="action.register">
+        <source>action.register</source>
+        <target>Zarejestruj</target>
+      </trans-unit>
+      <trans-unit id="message.registered_successfully">
+        <source>message.registered_successfully</source>
+        <target>Zarejestrowano pomyślnie</target>
+      </trans-unit>
+      <trans-unit id="message.no_account">
+        <source>message.no_account</source>
+        <target>Nie masz jeszcze konta?</target>
+      </trans-unit>
+
+
 
     </body>
   </file>
