@@ -49,8 +49,9 @@ class TaskController extends AbstractController
     )]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $author = $this->getUser(); // Pobiera zalogowanego użytkownika
+        $author = $this->isGranted('ROLE_ADMIN') ? null : $this->getUser();
         $pagination = $this->taskService->getPaginatedList($page, $author);
+
         return $this->render('task/index.html.twig', ['pagination' => $pagination]);
     }
 

@@ -18,13 +18,12 @@ interface TaskServiceInterface
     /**
      * Get paginated list.
      *
-     * @param int  $page   Page number
-     * @param User $author Author
+     * @param int       $page   Page number
+     * @param User|null $author Author (null returns all tasks)
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page, User $author): PaginationInterface;
-
+    public function getPaginatedList(int $page, ?User $author = null): PaginationInterface;
     /**
      * Save entity.
      *

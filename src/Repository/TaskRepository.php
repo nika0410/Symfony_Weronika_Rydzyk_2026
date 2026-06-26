@@ -40,22 +40,30 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
-     * @param User $author User entity
+     * @param User|null $author User entity (null returns all tasks)
      *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(User $author): QueryBuilder
+    public function queryAll(?User $author = null): QueryBuilder
     {
-        return $this->createQueryBuilder('task')
+        $queryBuilder = $this->createQueryBuilder('task')
             ->select(
-                'partial task.{id, createdAt, updatedAt, title}',
+                'partial task.{id, createdAt, updatedAt, title, author}',
                 'partial category.{id, title}',
-                'partial tags.{id, title}'
+                'partial tags.{id, title}',
+                'partial author.{id, email}'
             )
             ->join('task.category', 'category')
             ->leftJoin('task.tags', 'tags')
-            ->andWhere('task.author = :author')
-            ->setParameter('author', $author);
+            ->join('task.author', 'author');
+
+        if ($author instanceof User) {
+            $queryBuilder
+                ->andWhere('task.author = :author')
+                ->setParameter('author', $author);
+        }
+
+        return $queryBuilder;
     }
 
     /**

@@ -10,6 +10,7 @@
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6",
+        "erusev/parsedown": "*",
         "knplabs/knp-paginator-bundle": "*",
         "stof/doctrine-extensions-bundle": "*",
         "symfony/asset": "7.4.*",
@@ -25,7 +26,8 @@
         "symfony/validator": "7.4.*",
         "symfony/yaml": "7.4.*",
         "twig/extra-bundle": "*",
-        "twig/intl-extra": "*"
+        "twig/intl-extra": "*",
+        "twig/markdown-extra": "*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "*",
