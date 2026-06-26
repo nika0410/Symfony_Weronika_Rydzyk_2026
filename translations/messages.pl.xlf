@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="message.edited_successfully">
         <source>message.edited_successfully</source>
-        <target>Pomyślnie zedytowano rekord!</target>
+        <target>Pomyślnie edytowano rekord!</target>
       </trans-unit>
       <trans-unit id="action.edit">
         <source>action.edit</source>

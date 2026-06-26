@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Tag;
-use App\Form\TagType;
+use App\Form\Type\TagType;
 use App\Service\TagServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -74,6 +74,7 @@ class TagController extends AbstractController
         $form = $this->createForm(FormType::class, $tag, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('tag_delete', ['id' => $tag->getId()]),
+            'validation_groups' => false,
         ]);
         $form->handleRequest($request);
 

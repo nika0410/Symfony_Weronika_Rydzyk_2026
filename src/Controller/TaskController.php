@@ -172,6 +172,7 @@ class TaskController extends AbstractController
         $form = $this->createForm(FormType::class, $task, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('task_delete', ['id' => $task->getId()]),
+            'validation_groups' => false,
         ]);
         $form->handleRequest($request);
 

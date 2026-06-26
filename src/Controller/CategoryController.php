@@ -181,6 +181,7 @@ class CategoryController extends AbstractController
         $form = $this->createForm(FormType::class, $category, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
+            'validation_groups' => false,
         ]);
         $form->handleRequest($request);
 
