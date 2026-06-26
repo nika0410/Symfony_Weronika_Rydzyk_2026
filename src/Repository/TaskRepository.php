@@ -6,11 +6,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Category;
 
 /**
  * Class TaskRepository.
@@ -21,10 +22,6 @@ class TaskRepository extends ServiceEntityRepository
 {
     /**
      * Items per page.
-     *
-     * Use constants to define configuration options that rarely change instead
-     * of specifying them in configuration files.
-     * See https://symfony.com/doc/current/best_practices.html#configuration
      *
      * @var int
      */
@@ -43,16 +40,22 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
+     * @param User $author User entity
+     *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(User $author): QueryBuilder
     {
         return $this->createQueryBuilder('task')
             ->select(
                 'partial task.{id, createdAt, updatedAt, title}',
-                'partial category.{id, title}'
+                'partial category.{id, title}',
+                'partial tags.{id, title}'
             )
-            ->join('task.category', 'category');
+            ->join('task.category', 'category')
+            ->leftJoin('task.tags', 'tags')
+            ->andWhere('task.author = :author')
+            ->setParameter('author', $author);
     }
 
     /**
@@ -62,21 +65,19 @@ class TaskRepository extends ServiceEntityRepository
      *
      * @return int Number of tasks in category
      *
-     * @throws NoResultException
-     * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function countByCategory(Category $category): int
     {
-        // Używam wbudowanej metody
         $qb = $this->createQueryBuilder('task');
 
         return $qb->select($qb->expr()->countDistinct('task.id'))
             ->where('task.category = :category')
-            ->setParameter(':category', $category)
+            ->setParameter('category', $category)
             ->getQuery()
             ->getSingleScalarResult();
     }
-
 
     /**
      * Save entity.

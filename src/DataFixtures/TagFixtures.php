@@ -1,27 +1,40 @@
 <?php
 
+/**
+ * Tag fixtures.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Tag;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
+use Faker\Generator;
 
-class TagFixtures extends Fixture
+/**
+ * Class TagFixtures.
+ *
+ * @psalm-suppress MissingConstructor
+ */
+class TagFixtures extends AbstractBaseFixtures
 {
-    public function load(ObjectManager $manager): void
+    /**
+     * Load data.
+     *
+     * @psalm-suppress PossiblyNullPropertyFetch
+     * @psalm-suppress PossiblyNullReference
+     * @psalm-suppress UnusedClosureParam
+     */
+    protected function loadData(): void
     {
-        $faker = Factory::create();
-
-        for ($i = 0; $i < 20; $i++) {
-            $tag = new Tag();
-
-            $tag->setTitle($faker->word());
-
-            $manager->persist($tag);
+        if (!$this->manager instanceof ObjectManager || !$this->faker instanceof Generator) {
+            return;
         }
 
+        $this->createMany(20, 'tag', function (int $i) {
+            $tag = new Tag();
+            $tag->setTitle($this->faker->word());
 
-        $manager->flush();
+            return $tag;
+        });
     }
 }

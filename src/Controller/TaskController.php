@@ -7,6 +7,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\Type\TaskType;
 use App\Service\TaskServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,8 +47,8 @@ class TaskController extends AbstractController
     )]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $this->taskService->getPaginatedList($page);
-
+        $author = $this->getUser(); // Pobiera zalogowanego użytkownika
+        $pagination = $this->taskService->getPaginatedList($page, $author);
         return $this->render('task/index.html.twig', ['pagination' => $pagination]);
     }
 
@@ -66,12 +67,22 @@ class TaskController extends AbstractController
     )]
     public function view(Task $task): Response
     {
-        return $this->render(
-            'task/view.html.twig',
-            ['task' => $task]
-        );
+        // Jeśli autor zadania jest inny niż zalogowany użytkownik, nie pozwól zobaczyć
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash('warning', $this->translator->trans('message.record_not_found'));
+            return $this->redirectToRoute('task_index');
+        }
+
+        return $this->render('task/view.html.twig', ['task' => $task]);
     }
 
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
     /**
      * Create action.
      *
@@ -86,7 +97,10 @@ class TaskController extends AbstractController
     )]
     public function create(Request $request): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         $task = new Task();
+        $task->setAuthor($user);
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
@@ -123,6 +137,15 @@ class TaskController extends AbstractController
     )]
     public function edit(Request $request, Task $task): Response
     {
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.record_not_found')
+            );
+
+            return $this->redirectToRoute('task_index');
+        }
+
         $form = $this->createForm(
             TaskType::class,
             $task,
@@ -169,6 +192,15 @@ class TaskController extends AbstractController
     )]
     public function delete(Request $request, Task $task): Response
     {
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash(
+                'warning',
+                $this->translator->trans('message.record_not_found')
+            );
+
+            return $this->redirectToRoute('task_index');
+        }
+
         $form = $this->createForm(FormType::class, $task, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('task_delete', ['id' => $task->getId()]),
