@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Security\Voter\TaskVoter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class TaskController.
@@ -65,15 +67,13 @@ class TaskController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET']
     )]
+    #[IsGranted(TaskVoter::VIEW, subject: 'task')]
     public function view(Task $task): Response
     {
-        // Jeśli autor zadania jest inny niż zalogowany użytkownik, nie pozwól zobaczyć
-        if ($task->getAuthor() !== $this->getUser()) {
-            $this->addFlash('warning', $this->translator->trans('message.record_not_found'));
-            return $this->redirectToRoute('task_index');
-        }
-
-        return $this->render('task/view.html.twig', ['task' => $task]);
+        return $this->render(
+            'task/view.html.twig',
+            ['task' => $task]
+        );
     }
 
     /**
@@ -135,17 +135,9 @@ class TaskController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'PUT']
     )]
+    #[IsGranted(TaskVoter::EDIT, subject: 'task')]
     public function edit(Request $request, Task $task): Response
     {
-        if ($task->getAuthor() !== $this->getUser()) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.record_not_found')
-            );
-
-            return $this->redirectToRoute('task_index');
-        }
-
         $form = $this->createForm(
             TaskType::class,
             $task,
@@ -190,17 +182,9 @@ class TaskController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'DELETE']
     )]
+    #[IsGranted(TaskVoter::DELETE, subject: 'task')]
     public function delete(Request $request, Task $task): Response
     {
-        if ($task->getAuthor() !== $this->getUser()) {
-            $this->addFlash(
-                'warning',
-                $this->translator->trans('message.record_not_found')
-            );
-
-            return $this->redirectToRoute('task_index');
-        }
-
         $form = $this->createForm(FormType::class, $task, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('task_delete', ['id' => $task->getId()]),
