@@ -194,6 +194,35 @@
         <source>message.no_account</source>
         <target>Nie masz jeszcze konta?</target>
       </trans-unit>
+      <trans-unit id="title.user_list">
+        <source>title.user_list</source>
+        <target>Lista użytkowników</target>
+      </trans-unit>
+      <trans-unit id="title.user_details">
+        <source>title.user_details</source>
+        <target>Informacje o użytkowniku</target>
+      </trans-unit>
+      <trans-unit id="title.user_create">
+        <source>title.user_create</source>
+        <target>Wprowadź dane nowego użytkownika</target>
+      </trans-unit>
+      <trans-unit id="title.user_edit">
+        <source>title.user_edit</source>
+        <target>Edytuj informacje o użytkowniku</target>
+      </trans-unit>
+      <trans-unit id="title.user_delete">
+        <source>title.user_delete</source>
+        <target>Czy na pewno chcesz usunąć użytkownika %username%?</target>
+      </trans-unit>
+      <trans-unit id="action.create.user">
+        <source>action.create.user</source>
+        <target>Dodaj nowego użytkownika</target>
+      </trans-unit>
+      <trans-unit id="label.roles">
+        <source>label.roles</source>
+        <target>Status</target>
+      </trans-unit>
+
 
 
 

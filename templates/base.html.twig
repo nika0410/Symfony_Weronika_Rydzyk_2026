@@ -9,6 +9,11 @@
             <div class="nav-item nav-link">
                 {{ app.user.email }}
             </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="nav-item nav-link" href="{{ url('user_index') }}">
+                    {{ 'title.user_list'|trans }}
+                </a>
+            {% endif %}
             <a class="nav-item nav-link" href="{{ url('app_logout') }}">
                 {{ 'action.logout'|trans }}
             </a>
