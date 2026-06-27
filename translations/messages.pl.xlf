@@ -242,9 +242,29 @@
         <source>message.cannot_demote_self</source>
         <target>Nie możesz odebrać uprawnień sameu sobie</target>
       </trans-unit>
-      <trans-unit id="">
-        <source></source>
-        <target></target>
+      <trans-unit id="title.avatar_create">
+        <source>title.avatar_create</source>
+        <target>Dodaj zdjęcie avatara</target>
+      </trans-unit>
+      <trans-unit id="label.avatar">
+        <source>label.avatar</source>
+        <target>Zdjęcie avatara</target>
+      </trans-unit>
+      <trans-unit id="action.delete_avatar">
+        <source>action.delete_avatar</source>
+        <target>Usuń zdjęcie avatara</target>
+      </trans-unit>
+      <trans-unit id="action.edit_avatar">
+        <source>action.edit_avatar</source>
+        <target>Edytuj zdjęcie avatara</target>
+      </trans-unit>
+      <trans-unit id="title.avatar_edit">
+        <source>title.avatar_edit</source>
+        <target>Edytuj zdjęcie avatara</target>
+      </trans-unit>
+      <trans-unit id="title.avatar_delete">
+        <source>title.avatar_delete</source>
+        <target>Czy na pewno chcesz usunąć zdjęcie avatara</target>
       </trans-unit>
 
 

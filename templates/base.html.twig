@@ -6,6 +6,17 @@
 
     <div class="navbar-nav ms-auto">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if app.user.avatar.filename is defined and app.user.avatar.filename|length %}
+                <img class="nav-profile-img" src="{{ asset(avatars_directory ~ app.user.avatar.filename) }}">
+            {% endif %}
+                <a class="nav-item nav-link" href="{{ url('avatar_edit', {id: app.user.avatar.id}) }}">
+                    {{ 'action.edit_avatar'|trans }}
+                </a>
+            {% if app.user.avatar.filename is defined and app.user.avatar.filename|length %}
+                <a class="nav-item nav-link" href="{{ url('avatar_delete', {id: app.user.avatar.id}) }}">
+                    {{ 'action.delete_avatar'|trans }}
+                </a>
+            {% endif %}
             <div class="nav-item nav-link">
                 {{ app.user.email }}
             </div>
@@ -46,6 +57,12 @@
             label.required::after {
                 content: " *";
                 color: red;
+            }
+            .nav-profile-img {
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                object-fit: cover;
             }
         </style>
     {% endblock %}
