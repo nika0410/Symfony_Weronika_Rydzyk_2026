@@ -1,47 +1,100 @@
 <?php
 
+/**
+ * Avatar voter.
+ */
+
 namespace App\Security\Voter;
 
+use App\Entity\Avatar;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class AvatarVoter.
+ */
 final class AvatarVoter extends Voter
 {
-    public const EDIT = 'POST_EDIT';
-    public const VIEW = 'POST_VIEW';
+    /**
+     * Edit permission.
+     *
+     * @var string
+     */
+    public const EDIT = 'AVATAR_EDIT';
 
+    /**
+     * Delete permission.
+     *
+     * @var string
+     */
+    public const DELETE = 'AVATAR_DELETE';
+
+    /**
+     * Determines if this voter supports the attribute and subject.
+     *
+     * @param string $attribute An attribute
+     * @param mixed  $subject   The subject to secure
+     *
+     * @return bool Result
+     */
     protected function supports(string $attribute, mixed $subject): bool
     {
-        // replace with your own logic
-        // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::VIEW])
-            && $subject instanceof \App\Entity\Avatar;
+        return in_array($attribute, [self::EDIT, self::DELETE])
+            && $subject instanceof Avatar;
     }
 
+    /**
+     * Perform a single access check operation on a given attribute, subject and token.
+     *
+     * @param string         $attribute Permission name
+     * @param mixed          $subject   Object
+     * @param TokenInterface $token     Security token
+     * @param Vote|null      $vote      Vote object
+     *
+     * @return bool Vote result
+     */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
-        // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
-            $vote?->addReason('The user must be logged in to access this resource.');
-
+            return false;
+        }
+        if (!$subject instanceof Avatar) {
             return false;
         }
 
-        // ... (check conditions and return true to grant permission) ...
-        switch ($attribute) {
-            case self::EDIT:
-                // logic to determine if the user can EDIT
-                // return true or false
-                break;
-            case self::VIEW:
-                // logic to determine if the user can VIEW
-                // return true or false
-                break;
-        }
+        return match ($attribute) {
+            self::EDIT => $this->canEdit($subject, $user),
+            self::DELETE => $this->canDelete($subject, $user),
+            default => false,
+        };
+    }
 
-        return false;
+    /**
+     * Checks if user can edit avatar.
+     *
+     * @param Avatar        $avatar Avatar entity
+     * @param UserInterface $user   User
+     *
+     * @return bool Result
+     */
+    private function canEdit(Avatar $avatar, UserInterface $user): bool
+    {
+        return $avatar->getUser() === $user;
+    }
+
+    /**
+     * Checks if user can delete avatar.
+     *
+     * @param Avatar        $avatar Avatar entity
+     * @param UserInterface $user   User
+     *
+     * @return bool Result
+     */
+    private function canDelete(Avatar $avatar, UserInterface $user): bool
+    {
+        return $avatar->getUser() === $user;
     }
 }

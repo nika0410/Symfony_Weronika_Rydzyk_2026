@@ -16,7 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-
+use App\Security\Voter\AvatarVoter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 /**
  * Class AvatarController.
  */
@@ -101,6 +102,7 @@ class AvatarController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'PUT']
     )]
+    #[IsGranted(AvatarVoter::EDIT, subject: 'avatar')]
     public function edit(Request $request, Avatar $avatar): Response
     {
         /** @var User $user */
@@ -159,6 +161,7 @@ class AvatarController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'DELETE']
     )]
+    #[IsGranted(AvatarVoter::EDIT, subject: 'avatar')]
     public function delete(Request $request, Avatar $avatar): Response
     {
         /** @var User $user */
