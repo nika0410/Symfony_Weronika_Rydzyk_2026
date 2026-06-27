@@ -6,6 +6,7 @@
 
 namespace App\Repository;
 
+use App\Dto\TaskListFiltersDto;
 use App\Entity\Category;
 use App\Entity\Task;
 use App\Entity\User;
@@ -40,11 +41,12 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
-     * @param User|null $author User entity (null returns all tasks)
+     * @param User|null               $author  User entity (null returns all tasks)
+     * @param TaskListFiltersDto|null $filters Filters
      *
      * @return QueryBuilder Query builder
      */
-    public function queryAll(?User $author = null): QueryBuilder
+    public function queryAll(?User $author = null, ?TaskListFiltersDto $filters = null): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('task')
             ->select(
@@ -61,6 +63,10 @@ class TaskRepository extends ServiceEntityRepository
             $queryBuilder
                 ->andWhere('task.author = :author')
                 ->setParameter('author', $author);
+        }
+
+        if ($filters instanceof TaskListFiltersDto) {
+            $queryBuilder = $this->applyFiltersToList($queryBuilder, $filters);
         }
 
         return $queryBuilder;
@@ -107,5 +113,28 @@ class TaskRepository extends ServiceEntityRepository
     {
         $this->getEntityManager()->remove($task);
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder       $queryBuilder Query builder
+     * @param TaskListFiltersDto $filters      Filters
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, TaskListFiltersDto $filters): QueryBuilder
+    {
+        if ($filters->category instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters->category);
+        }
+
+        if ($filters->tag instanceof \App\Entity\Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters->tag);
+        }
+
+        return $queryBuilder;
     }
 }

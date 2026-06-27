@@ -19,6 +19,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Security\Voter\TaskVoter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Dto\TaskListInputFiltersDto;
+use App\Resolver\TaskListInputFiltersDtoResolver;
+use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 
 /**
  * Class TaskController.
@@ -47,10 +50,10 @@ class TaskController extends AbstractController
         name: 'task_index',
         methods: ['GET']
     )]
-    public function index(#[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryString(resolver: TaskListInputFiltersDtoResolver::class)] TaskListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
     {
         $author = $this->isGranted('ROLE_ADMIN') ? null : $this->getUser();
-        $pagination = $this->taskService->getPaginatedList($page, $author);
+        $pagination = $this->taskService->getPaginatedList($page, $author, $filters);
 
         return $this->render('task/index.html.twig', ['pagination' => $pagination]);
     }

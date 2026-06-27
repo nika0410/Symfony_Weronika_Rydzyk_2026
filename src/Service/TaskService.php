@@ -6,6 +6,8 @@
 
 namespace App\Service;
 
+use App\Dto\TaskListFiltersDto;
+use App\Dto\TaskListInputFiltersDto;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Repository\TaskRepository;
@@ -27,25 +29,34 @@ class TaskService implements TaskServiceInterface
     /**
      * Constructor.
      *
-     * @param TaskRepository     $taskRepository Task repository
-     * @param PaginatorInterface $paginator      Paginator
+     * @param CategoryServiceInterface $categoryService Category service
+     * @param PaginatorInterface       $paginator       Paginator
+     * @param TagServiceInterface      $tagService      Tag service
+     * @param TaskRepository           $taskRepository  Task repository
      */
-    public function __construct(private readonly TaskRepository $taskRepository, private readonly PaginatorInterface $paginator)
-    {
+    public function __construct(
+        private readonly CategoryServiceInterface $categoryService,
+        private readonly PaginatorInterface $paginator,
+        private readonly TagServiceInterface $tagService,
+        private readonly TaskRepository $taskRepository
+    ) {
     }
 
     /**
      * Get paginated list.
      *
-     * @param int       $page   Page number
-     * @param User|null $author Author (null returns all tasks)
+     * @param int                     $page    Page number
+     * @param User|null               $author  Author (null returns all tasks)
+     * @param TaskListInputFiltersDto $filters Filters
      *
      * @return PaginationInterface Paginated list
      */
-    public function getPaginatedList(int $page, ?User $author = null): PaginationInterface
+    public function getPaginatedList(int $page, ?User $author = null, ?TaskListInputFiltersDto $filters = null): PaginationInterface
     {
+        $filters = $this->prepareFilters($filters ?? new TaskListInputFiltersDto());
+
         return $this->paginator->paginate(
-            $this->taskRepository->queryAll($author),
+            $this->taskRepository->queryAll($author, $filters),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE,
             [
@@ -74,5 +85,20 @@ class TaskService implements TaskServiceInterface
     public function delete(Task $task): void
     {
         $this->taskRepository->delete($task);
+    }
+
+    /**
+     * Prepare filters for the tasks list.
+     *
+     * @param TaskListInputFiltersDto $filters Raw filters from request
+     *
+     * @return TaskListFiltersDto Result filters
+     */
+    private function prepareFilters(TaskListInputFiltersDto $filters): TaskListFiltersDto
+    {
+        return new TaskListFiltersDto(
+            null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
+            null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null
+        );
     }
 }

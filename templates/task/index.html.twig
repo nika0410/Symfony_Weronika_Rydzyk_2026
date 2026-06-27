@@ -40,11 +40,21 @@
                     <td>{{ task.createdAt|format_date('long') }}</td>
                     <td>{{ task.updatedAt|format_date('long') }}</td>
                     <td>{{ task.title }}</td>
-                    <td>{{ task.category.title }}</td>
                     <td>
-                        <div class="text-truncate" style="max-width: 80px;" title="{{ task.tags|map(tag => tag.title)|join(', ') }}">
-                            {{ task.tags|map(tag => tag.title)|join(', ') }}
-                        </div>
+                        <a class="btn btn-outline-primary" href="{{ url('task_index', {'categoryId': task.category.id}) }}" title="{{ task.category.title }}">
+                            {{ task.category.title }}
+                        </a>
+                    </td>
+                    <td>
+                        {% if task.tags is defined and task.tags|length %}
+                            {% for tag in task.tags %}
+                                <a class="btn btn-outline-primary" href="{{ url('task_index', {'tagId': tag.id}) }}" title="{{ tag.title }}">
+                                    {{ tag.title }}
+                                </a>
+                            {% endfor %}
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
                     </td>
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>{{ task.author.email }}</td>
